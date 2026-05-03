@@ -2,11 +2,7 @@ from collections import defaultdict, deque
 import heapq
 from graph import social
 
-# ════════════════════════════════════════════════════════
-# 1. BFS — Friend Suggestions
-#    Time: O(V + E)  Space: O(V)
-#    Real use: LinkedIn "People you may know"
-# ════════════════════════════════════════════════════════
+
 def suggest_friends(user_id: str, max_suggestions: int = 5) -> list:
     if user_id not in social.users:
         return []
@@ -35,11 +31,7 @@ def suggest_friends(user_id: str, max_suggestions: int = 5) -> list:
     ]
 
 
-# ════════════════════════════════════════════════════════
-# 2. DIJKSTRA — Shortest Connection Path
-#    Time: O((V + E) log V)  Space: O(V)
-#    Real use: LinkedIn "How are you connected?"
-# ════════════════════════════════════════════════════════
+
 def shortest_path(start_id: str, end_id: str) -> dict:
     if start_id not in social.users or end_id not in social.users:
         return {"path": [], "hops": -1, "found": False}
@@ -69,11 +61,6 @@ def shortest_path(start_id: str, end_id: str) -> dict:
     return {"path": [], "hops": -1, "found": False}
 
 
-# ════════════════════════════════════════════════════════
-# 3. MAX HEAP — Top Influencers
-#    Time: O(n log k)  Space: O(k)
-#    Real use: Twitter trending accounts
-# ════════════════════════════════════════════════════════
 def get_top_influencers(k: int = 5) -> list:
     # Max heap using negative values (Python heapq is min-heap)
     heap = []
@@ -93,11 +80,7 @@ def get_top_influencers(k: int = 5) -> list:
     return top
 
 
-# ════════════════════════════════════════════════════════
-# 4. DYNAMIC PROGRAMMING — Feed Ranking
-#    Time: O(n log n)  Space: O(n)
-#    Real use: Instagram feed algorithm
-# ════════════════════════════════════════════════════════
+
 def rank_feed(user_id: str, max_posts: int = 10) -> list:
     if user_id not in social.users:
         return []
@@ -129,12 +112,6 @@ def rank_feed(user_id: str, max_posts: int = 10) -> list:
         for p in ranked[:max_posts]
     ]
 
-
-# ════════════════════════════════════════════════════════
-# 5. UNION-FIND — Community Detection
-#    Time: O(V * α(V)) ≈ O(V)  Space: O(V)
-#    Real use: Facebook friend groups
-# ════════════════════════════════════════════════════════
 class UnionFind:
     def __init__(self, elements):
         self.parent = {e: e for e in elements}
@@ -184,10 +161,6 @@ def detect_communities() -> list:
     ]
 
 
-# ════════════════════════════════════════════════════════
-# 6. DFS — Mutual Followers
-#    Time: O(V + E)  Space: O(V)
-# ════════════════════════════════════════════════════════
 def get_mutual_followers(user1_id: str, user2_id: str) -> list:
     followers1 = social.followers[user1_id]
     followers2 = social.followers[user2_id]
