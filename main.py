@@ -1,5 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import FileResponse
+import os
 from graph import social
 from schemas import UserCreate, FollowRequest, Post, FeedRequest
 from seed_data import seed
@@ -14,6 +16,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+@app.get("/", include_in_schema=False)
+def home():
+    return FileResponse(os.path.join(BASE_DIR, "static", "index.html"))
 
 @app.post("/users")
 def create_user(user: UserCreate):
